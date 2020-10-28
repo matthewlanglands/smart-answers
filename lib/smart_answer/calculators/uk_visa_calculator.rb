@@ -14,7 +14,7 @@ module SmartAnswer::Calculators
     end
 
     def passport_country_in_non_visa_national_list?
-      COUNTRY_GROUP_NON_VISA_NATIONAL.include?(@passport_country)
+      COUNTRY_GROUP_NON_VISA_NATIONAL.include?(@passport_country) || passport_country_in_eea?
     end
 
     def passport_country_in_visa_national_list?
