@@ -31,7 +31,7 @@ module SmartAnswer
           elsif calculator.passport_country_is_macao?
             question :what_sort_of_travel_document?
           elsif calculator.passport_country_in_eea?
-            outcome :outcome_no_visa_needed
+            outcome :when_are_you_coming_to_the_uk?
           else
             question :purpose_of_visit?
           end
@@ -83,6 +83,20 @@ module SmartAnswer
 
         next_node do |_|
           question :purpose_of_visit?
+        end
+      end
+
+      # Q1g / Q1h
+      radio :when_are_you_coming_to_the_uk? do
+        option :before_2021
+        option :from_2021
+
+        next_node do |response|
+          if response == "before_2021"
+            outcome :outcome_no_visa_needed_eu
+          else
+            outcome :purpose_of_visit?
+          end
         end
       end
 
@@ -302,6 +316,7 @@ module SmartAnswer
       outcome :outcome_medical_n
       outcome :outcome_medical_y
       outcome :outcome_no_visa_needed
+      outcome :outcome_no_visa_needed_eu
       outcome :outcome_partner_family_british_citizen_y
       outcome :outcome_partner_family_eea_y
       outcome :outcome_partner_family_eea_n
